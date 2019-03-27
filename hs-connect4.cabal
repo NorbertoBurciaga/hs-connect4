@@ -15,8 +15,10 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Data.String.Strip
+  exposed-modules:     Connect4
+                     , Connect4.Internal
   build-depends:       base >= 4.7 && < 5
+                     , matrix
   default-language:    Haskell2010
 
 executable hs-connect4
@@ -34,6 +36,7 @@ test-suite hs-connect4-test
   build-depends:       base
                      , hs-connect4
                      , hspec
+                     , matrix
                      , QuickCheck
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010

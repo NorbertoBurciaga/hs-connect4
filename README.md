@@ -10,6 +10,7 @@
 * [Goal States](#goal-states)
 * [Actions](#actions)
 * [Heuristics](#heuristics)
+* [Testing](#testing)
 * [Support](#support)
 * [FAQ](#faq)
 * [Development](#development)
@@ -206,6 +207,14 @@ drop_checker board_state player column =
 [Contents](#contents)
 
 ## Heuristics
+
+[Contents](#contents)
+
+## Testing
+
+```console
+$ stack build --test
+```
 
 [Contents](#contents)
 
