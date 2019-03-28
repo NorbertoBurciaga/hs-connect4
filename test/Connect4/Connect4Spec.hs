@@ -18,3 +18,10 @@ spec = do
         property $ \rows columns -> rows /= 0 && columns /= 0 ==> 
            (abs rows) == nrows (initiate_board rows columns) && 
            (abs columns) == ncols (initiate_board rows columns)
+
+  describe "is_move_on_the_board" $ do
+     context "every move should be inside the limits of the board" $ do
+       it "should validate row and column for every move to be inside the limits of the board" $ do
+          is_move_on_the_board 6 4 (zero 6 7) `shouldBe` True
+          is_move_on_the_board 6 8 (zero 6 7) `shouldBe` False
+          is_move_on_the_board 4 4 (fromLists [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,2,0]]) `shouldBe` True
