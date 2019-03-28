@@ -1,5 +1,5 @@
 module Connect4 (
-	initiate_board
+   initiate_board
 ) where
 
 import Connect4.Internal
