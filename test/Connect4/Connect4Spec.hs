@@ -32,3 +32,10 @@ spec = do
          rows_available 3 (fromLists [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,0,2,0]]) `shouldBe` 3
          rows_available 1 (initiate_board 4 4) `shouldBe` 4
          rows_available 1 (fromLists [[1,0,0,0],[2,0,0,0],[1,0,0,0],[1,0,2,0]]) `shouldBe` 0
+         
+  describe "is_valid_move" $ do
+    context "when a player plays a move, it should be inside the board and the column should have rows available" $ do
+      it "should return true if the move is in the board and there is available rows in the column played" $ do
+         is_valid_move 1 (initiate_board 4 4) `shouldBe` True
+         is_valid_move 1 (fromLists [[1,0,0,0],[2,0,0,0],[1,0,0,0],[1,0,2,0]]) `shouldBe` False
+         is_valid_move 1 (fromLists [[0,0,0,0],[2,0,0,0],[1,0,0,0],[1,0,2,0]]) `shouldBe` True
