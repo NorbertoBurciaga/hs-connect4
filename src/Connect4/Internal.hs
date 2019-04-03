@@ -2,6 +2,8 @@ module Connect4.Internal(
      is_move_on_the_board
    , rows_available
    , is_valid_move
+   , count_moves
+   , is_winning_position
 ) where
 
 import Data.Matrix
@@ -45,3 +47,44 @@ is_valid_move :: (Eq a, Num a) => Int -> Matrix a -> Bool
 is_valid_move column board = column > 0 && 
                              column <= (ncols board) && 
                              (rows_available column board) > 0
+
+---------------------------------------------------------------------------------------
+-- count_moves
+-- DESCRIPTION: in order to win, counting moves for the same player from last move in  
+--              vertical, horizontal an diagonal directions
+-- INPUT: player row column direction board
+-- OUTPUT: number of moves for a player from the row-column position in the direction specified 
+-- PRE-CONDITION: n/a
+-- POST-CONDITION: n/a
+---------------------------------------------------------------------------------------
+count_moves :: (Num a, Eq a) => a -> Int -> Int -> Int -> Matrix a -> Int
+count_moves player row column direction board =
+   if is_move_on_the_board row column board &&
+      board ! (row, column) == player
+   then
+      case direction of
+         0   -> 1 + count_moves player  row      (column + 1) direction board
+         45  -> 1 + count_moves player (row - 1) (column + 1) direction board
+         135 -> 1 + count_moves player (row - 1) (column - 1) direction board
+         180 -> 1 + count_moves player  row      (column - 1) direction board
+         225 -> 1 + count_moves player (row + 1) (column - 1) direction board
+         270 -> 1 + count_moves player (row + 1)  column      direction board
+         315 -> 1 + count_moves player (row + 1) (column + 1) direction board
+         otherwise -> 0
+   else 0
+
+---------------------------------------------------------------------------------------
+-- is_winning_position
+-- DESCRIPTION: verifies if a move wins the game
+-- INPUT: player row column board
+-- OUTPUT: true if player wins, false if player doesn't win
+-- PRE-CONDITION: row-column position should be a valid move
+-- POST-CONDITION: n/a
+---------------------------------------------------------------------------------------
+is_winning_position :: (Num a, Eq a) => a -> Int -> Int -> Matrix a -> Bool
+is_winning_position player row column board = 
+   ((count_moves player  row (column - 1) 180 board + count_moves player row (column + 1) 0 board) >=3) ||
+   ((count_moves player (row - 1) (column + 1) 45 board + count_moves player (row + 1) (column - 1) 225 board) >=3) ||
+   (count_moves player (row + 1) column 270 board >=3) ||
+   ((count_moves player (row - 1) (column - 1) 135 board + count_moves player (row + 1) (column + 1) 315 board) >=3)
+

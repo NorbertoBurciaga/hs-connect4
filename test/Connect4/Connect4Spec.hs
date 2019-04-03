@@ -39,3 +39,20 @@ spec = do
          is_valid_move 1 (initiate_board 4 4) `shouldBe` True
          is_valid_move 1 (fromLists [[1,0,0,0],[2,0,0,0],[1,0,0,0],[1,0,2,0]]) `shouldBe` False
          is_valid_move 1 (fromLists [[0,0,0,0],[2,0,0,0],[1,0,0,0],[1,0,2,0]]) `shouldBe` True
+
+  describe "count_moves" $ do
+    context "in order to win, counting moves for the same player from last move in vertical, horizontal and diagonal directions" $ do
+      it "should return the number of moves for the same player from the row-column position in the direction specified" $ do
+        count_moves 1 4 1 0   (fromLists [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,1,1,1]]) `shouldBe` 4
+        count_moves 1 4 4 180 (fromLists [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,1,1,1]]) `shouldBe` 4
+        count_moves 1 2 1 270 (fromLists [[0,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0]]) `shouldBe` 3
+        count_moves 2 4 1 45  (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 4
+        count_moves 1 4 4 135 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 4
+        count_moves 1 1 1 315 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 4
+        
+  describe "is_winning_position" $ do
+    context "when a player makes a move, from that position verify if he wins the game by counting in all directions (except up vertical)" $ do
+      it "verifies if a move wins the game" $ do
+        is_winning_position 1 1 1 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` True
+        is_winning_position 2 1 4 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` True
+        
