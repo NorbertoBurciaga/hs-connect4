@@ -42,12 +42,17 @@ spec = do
 
   describe "count_moves" $ do
     context "in order to win, counting moves for the same player from last move in vertical, horizontal and diagonal directions" $ do
-      it "should return the number of moves for the same player from the row-column position in the direction specified" $ do
+      it "should return the number of moves for player 1 from row 4 column 1 position in right horizontal direction" $ do
         count_moves 1 4 1 0   (fromLists [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,1,1,1]]) `shouldBe` 4
+      it "should return the number of moves for player 1 from row 4 column 4 position in left horizontal direction" $ do
         count_moves 1 4 4 180 (fromLists [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,1,1,1]]) `shouldBe` 4
+      it "should return the number of moves for player 1 from row 2 column 1 position in down vertical direction" $ do
         count_moves 1 2 1 270 (fromLists [[0,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0]]) `shouldBe` 3
+      it "should return the number of moves for player 2 from row 4 column 1 position in diagonal positive slope direction" $ do
         count_moves 2 4 1 45  (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 4
+      it "should return the number of moves for player 1 from row 4 column 4 position in diagonal negative slope direction" $ do
         count_moves 1 4 4 135 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 4
+      it "should return the number of moves for player 1 from row 1 column 1 position in diagonal negative slope direction" $ do
         count_moves 1 1 1 315 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 4
         
   describe "is_winning_position" $ do
@@ -55,4 +60,13 @@ spec = do
       it "verifies if a move wins the game" $ do
         is_winning_position 1 1 1 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` True
         is_winning_position 2 1 4 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` True
+
+  describe "possible_next_moves" $ do
+    context "At any point of the game a player wants to know what moves can perform next" $ do
+      it "should be the list of all columns when a player can make a move in case of a new game" $ do
+        possible_next_moves (zero 6 7)  `shouldBe` [1, 2, 3, 4, 5, 6, 7]
+      it "should be an empty list when the board is already filled with moves" $ do
+        possible_next_moves (fromLists [[1,1,2,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` []
+      it "should be [2, 4] when a 4x4 board has empty spaces in column 2 and column 4 meaning column 1 and 3 area already filled" $ do
+        possible_next_moves (fromLists [[1,0,2,0],[2,0,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` [2, 4]
         
