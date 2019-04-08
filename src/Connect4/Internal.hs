@@ -4,7 +4,7 @@ module Connect4.Internal(
    , is_valid_move
    , count_moves
    , is_winning_position
-   , possible_next_moves
+   , next_possible_moves
 ) where
 
 import Data.Matrix
@@ -90,13 +90,14 @@ is_winning_position player row column board =
    ((count_moves player (row - 1) (column - 1) 135 board + count_moves player (row + 1) (column + 1) 315 board) >=3)
 
 ---------------------------------------------------------------------------------------
--- possible_next_moves
+-- next_possible_moves
 -- DESCRIPTION: At any point of the game a player wants to know what moves can perform next
 -- INPUT: board
 -- OUTPUT: list of possible next moves
 -- PRE-CONDITION: 
 -- POST-CONDITION: n/a
 ---------------------------------------------------------------------------------------
-possible_next_moves board = [ x | x <-[1..(ncols board)], is_valid_move x board]
+next_possible_moves :: (Eq a, Num a) => Matrix a -> [Int]
+next_possible_moves board = [ x | x <-[1..(ncols board)], is_valid_move x board]
 
 

@@ -61,12 +61,12 @@ spec = do
         is_winning_position 1 1 1 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` True
         is_winning_position 2 1 4 (fromLists [[1,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` True
 
-  describe "possible_next_moves" $ do
+  describe "next_possible_moves" $ do
     context "At any point of the game a player wants to know what moves can perform next" $ do
       it "should be the list of all columns when a player can make a move in case of a new game" $ do
-        possible_next_moves (zero 6 7)  `shouldBe` [1, 2, 3, 4, 5, 6, 7]
+        next_possible_moves (zero 6 7)  `shouldBe` [1, 2, 3, 4, 5, 6, 7]
       it "should be an empty list when the board is already filled with moves" $ do
-        possible_next_moves (fromLists [[1,1,2,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` []
+        next_possible_moves (fromLists [[1,1,2,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` []
       it "should be [2, 4] when a 4x4 board has empty spaces in column 2 and column 4 meaning column 1 and 3 area already filled" $ do
-        possible_next_moves (fromLists [[1,0,2,0],[2,0,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` [2, 4]
+        next_possible_moves (fromLists [[1,0,2,0],[2,0,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` [2, 4]
         
