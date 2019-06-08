@@ -166,6 +166,7 @@ Examples of winning states for player 1:
 │ 0 1 x x x 0 0 │
 └               ┘
 ```
+Where x represent a move from any player
 
 - Diagonal
 
@@ -179,6 +180,7 @@ Examples of winning states for player 1:
 │ 0 0 x x x 1 0 │
 └               ┘
 ```
+Where x represent a move from any player
 
 [Contents](#contents)
 
