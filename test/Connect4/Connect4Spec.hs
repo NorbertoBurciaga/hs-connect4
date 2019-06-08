@@ -98,3 +98,30 @@ spec = do
       it "should be [2, 4] when a 4x4 board has empty spaces in column 2 and column 4 meaning column 1 and 3 area already filled" $ do
         next_possible_moves (fromLists [[1,0,2,0],[2,0,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` [2, 4]
         
+  describe "evaluate_board_for_player" $ do
+    context "At some point in time it is required to evaluate how good or how bad is that board  for a player" $ do
+      it "should return 100 if player 1 won the game" $ do
+        evaluate_board_for_player 1 (fromLists [[1,0,0,0],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 100
+      it "should return 75 if player 1 moved and generated a double possible game" $ do
+        evaluate_board_for_player 1 (fromLists [[0,0,0,0],[1,1,1,0],[2,1,2,1],[1,2,2,2]]) `shouldBe` 75
+         --      1,2,3,4th column
+         -- 1st [0,0,0,0]<-- Player 1 wins here after player 2 move below
+         -- 2nd [1,1,1,0]<-- Player 2 needs to play here to not let 1 win
+         -- 3rd [2,1,2,1]
+         -- 4th [1,2,2,2]
+         
+      it "should return a 0 value for player 1 if the board is empty" $ do
+        evaluate_board_for_player 1 (initiate_board 6 7) `shouldBe` 0
+      it "should return 0 if it is a draw board" $ do
+        evaluate_board_for_player 1 (fromLists [[2,1,2,1],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` 0
+          
+      it "should return -75 if opponent of player 1 moved and generated a double possible game" $ do
+        evaluate_board_for_player 1 (fromLists [[0,0,0,0],[2,2,2,0],[1,2,1,2],[2,1,1,1]]) `shouldBe` -75
+         --      1,2,3,4th column
+         -- 1st [0,0,0,0]<-- Player 2 wins here after player 1 move
+         -- 2nd [2,2,2,0]<-- Player 1 needs to play here to not let 1 win
+         -- 3rd [1,2,1,2]
+         -- 4th [2,1,1,1]
+      it "should return -100 if player 1 lost the game" $ do
+        evaluate_board_for_player 1 (fromLists [[0,0,0,2],[2,1,2,1],[1,2,1,2],[2,1,2,1]]) `shouldBe` -100
+

@@ -5,6 +5,7 @@ module Connect4.Internal(
    , count_moves
    , is_winning_position
    , next_possible_moves
+   , evaluate_board_for_player
 ) where
 
 import Data.Matrix
@@ -100,4 +101,13 @@ is_winning_position player row column board =
 next_possible_moves :: (Eq a, Num a) => Matrix a -> [Int]
 next_possible_moves board = [ x | x <-[1..(ncols board)], is_valid_move x board]
 
-
+---------------------------------------------------------------------------------------
+-- evaluate_board_for_player
+-- DESCRIPTION: At any point of the game a player wants to how favorable is the board
+-- INPUT: player board
+-- OUTPUT: int value from -100 to 100 depending on how favorable is the board for the player
+-- PRE-CONDITION: 
+-- POST-CONDITION: n/a
+---------------------------------------------------------------------------------------
+evaluate_board_for_player :: (Eq a, Num a) => Int -> Matrix a -> Int
+evaluate_board_for_player player board = 100
