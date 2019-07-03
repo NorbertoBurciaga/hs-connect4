@@ -102,6 +102,17 @@ next_possible_moves :: (Eq a, Num a) => Matrix a -> [Int]
 next_possible_moves board = [ x | x <-[1..(ncols board)], is_valid_move x board]
 
 ---------------------------------------------------------------------------------------
+-- did_player_win
+-- DESCRIPTION: verify if player won the game in this board
+-- INPUT: player board
+-- OUTPUT: true if player won, false otherwise
+-- PRE-CONDITION: board should be a matrix of players
+-- POST-CONDITION: n/a
+---------------------------------------------------------------------------------------
+did_player_win :: (Num a, Eq a) => a -> Matrix a -> Bool
+did_player_win player board = False
+
+---------------------------------------------------------------------------------------
 -- evaluate_board_for_player
 -- DESCRIPTION: At any point of the game a player wants to how favorable is the board
 -- INPUT: player board
@@ -109,5 +120,7 @@ next_possible_moves board = [ x | x <-[1..(ncols board)], is_valid_move x board]
 -- PRE-CONDITION: 
 -- POST-CONDITION: n/a
 ---------------------------------------------------------------------------------------
-evaluate_board_for_player :: (Eq a, Num a) => Int -> Matrix a -> Int
-evaluate_board_for_player player board = 100
+evaluate_board_for_player :: (Eq a, Num a) => a -> Matrix a -> Int
+evaluate_board_for_player player board 
+    | did_player_win player board = 100
+    | otherwise = 0
